@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
@@ -17,17 +18,28 @@ function writeData(data) {
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
 }
 
-app.get('/associados', (req, res) => {
+// Cadastro de ONGs
+app.post('/ongs', (req, res) => {
   const data = readData();
-  res.json(data.associados || []);
+  data.ongs = data.ongs || [];
+  data.ongs.push(req.body);
+  writeData(data);
+  res.status(201).json({ message: 'ONG cadastrada com sucesso' });
 });
 
-app.post('/associados', (req, res) => {
+// Listar ONGs
+app.get('/ongs', (req, res) => {
   const data = readData();
-  data.associados = data.associados || [];
-  data.associados.push(req.body);
+  res.json(data.ongs || []);
+});
+
+// Cadastro de Usuários
+app.post('/usuarios', (req, res) => {
+  const data = readData();
+  data.usuarios = data.usuarios || [];
+  data.usuarios.push(req.body);
   writeData(data);
-  res.status(201).json({ message: 'Associado adicionado' });
+  res.status(201).json({ message: 'Usuário cadastrado com sucesso' });
 });
 
 // Rota de exemplo
