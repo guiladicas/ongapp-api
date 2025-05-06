@@ -30,6 +30,11 @@ app.post('/associados', (req, res) => {
   res.status(201).json({ message: 'Associado adicionado' });
 });
 
+// Rota de exemplo
+app.get('/api/exemplo', (req, res) => {
+  res.json({ mensagem: 'API funcionando corretamente!' });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
